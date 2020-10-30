@@ -16,6 +16,7 @@ class DockerRegistry2::Registry
     @password = options[:password]
     @open_timeout = options[:open_timeout] || 2
     @read_timeout = options[:read_timeout] || 5
+    @verify_ssl = options[:verify_ssl] || OpenSSL::SSL::VERIFY_PEER
   end
 
   def doget(url)
@@ -249,6 +250,7 @@ class DockerRegistry2::Registry
           url: @base_uri+url,
           headers: headers(payload: payload),
           block_response: block,
+          verify_ssl: @verify_ssl,
           open_timeout: @open_timeout,
           read_timeout: @read_timeout,
           payload: payload
@@ -286,6 +288,7 @@ class DockerRegistry2::Registry
           password: @password,
           headers: headers(payload: payload),
           block_response: block,
+          verify_ssl: @verify_ssl,
           open_timeout: @open_timeout,
           read_timeout: @read_timeout,
           payload: payload
@@ -315,6 +318,7 @@ class DockerRegistry2::Registry
           url: @base_uri+url,
           headers: headers(payload: payload, bearer_token: token),
           block_response: block,
+          verify_ssl: @verify_ssl,
           open_timeout: @open_timeout,
           read_timeout: @read_timeout,
           payload: payload
@@ -347,6 +351,7 @@ class DockerRegistry2::Registry
           url: uri.to_s, headers: {params: target[:params]},
           user: @user,
           password: @password,
+          verify_ssl: @verify_ssl,
           open_timeout: @open_timeout,
           read_timeout: @read_timeout
         )
